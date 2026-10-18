@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Sidebar Fragment -->
+    <aside class="sidebar" th:fragment="sidebar">
+        <!-- Brand Header -->
+        <div class="sidebar-brand">
+            <div class="brand-icon">⚡</div>
+            <div>
+                <div class="brand-title">ApexEMS</div>
+                <div class="brand-subtitle">Enterprise Operations</div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Core Management</div>
+            <ul class="nav-menu">
+                <li class="nav-item" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+                    <a th:href="@{/dashboard}">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" th:classappend="${activePage == 'employees'} ? 'active' : ''">
+                    <a th:href="@{/employees}">
+                        <span class="nav-icon">👥</span>
+                        <span>Employee Directory</span>
+                    </a>
+                </li>
+                <li class="nav-item" th:classappend="${activePage == 'new-employee'} ? 'active' : ''">
+                    <a th:href="@{/employees/new}">
+                        <span class="nav-icon">➕</span>
+                        <span>Add Employee</span>
+                    </a>
+                </li>
+                <li class="nav-item" th:classappend="${activePage == 'settings'} ? 'active' : ''">
+                    <a th:href="@{/settings}">
+                        <span class="nav-icon">⚙️</span>
+                        <span>System Settings</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="nav-section-title" style="margin-top: 1.5rem;">Developer & Tools</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a th:href="@{/employees/export}" title="Download complete employee dataset as CSV">
+                        <span class="nav-icon">📥</span>
+                        <span>Export CSV</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/api/v1/employees}" target="_blank" title="View live JSON REST API">
+                        <span class="nav-icon">⚡</span>
+                        <span>REST API (JSON)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/h2-console}" target="_blank" title="Opens H2 Database Web Console in a new tab">
+                        <span class="nav-icon">🗄️</span>
+                        <span>H2 Database UI</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sidebar Gamified Team Status -->
+        <div class="sidebar-footer">
+            <div class="level-card">
+                <div class="level-header">
+                    <span class="level-title">Team Efficiency</span>
+                    <span class="level-pill">Level 4</span>
+                </div>
+                <div class="level-progress-bar">
+                    <div class="level-progress-fill"></div>
+                </div>
+                <div class="level-caption">98% High operational health</div>
+            </div>
+        </div>
+    </aside>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Top Header Fragment -->
+    <header class="top-header" th:fragment="header(pageTitle)">
+        <div class="header-left">
+            <button class="mobile-toggle-btn" id="mobileNavToggle" aria-label="Toggle navigation">
+                ☰
+            </button>
+            <h1 class="page-title" th:text="${pageTitle}">Overview</h1>
+        </div>
+
+        <div class="header-right">
+            <!-- Theme Toggle Button -->
+            <button type="button" class="btn btn-secondary btn-sm" id="headerThemeToggle" title="Toggle Light / Neon Black Theme" style="display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600;">
+                <span id="themeToggleIcon">🌙</span>
+                <span id="themeToggleText">Neon Dark</span>
+            </button>
+
+            <!-- Dynamic Live Clock -->
+            <div class="live-clock" id="liveClock">
+                <span>🕒</span> Loading clock...
+            </div>
+
+            <!-- Admin Profile Indicator -->
+            <div class="admin-badge">
+                <div class="admin-avatar">AD</div>
+                <div class="admin-info">
+                    <span class="admin-name">Admin User</span>
+                    <span class="admin-role">System Administrator</span>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

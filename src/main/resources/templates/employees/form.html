@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${isEdit ? 'Edit Employee - ApexEMS' : 'Add Employee - ApexEMS'}">Employee Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <th:block th:replace="~{fragments/header :: header(${isEdit ? 'Edit Employee Profile' : 'Add New Employee'})}"></th:block>
+
+            <!-- Page Content -->
+            <main class="content-area">
+                <div class="card" style="max-width: 860px; margin: 0 auto;">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">
+                                <span th:text="${isEdit ? '✏️' : '➕'}">➕</span>
+                                <span th:text="${isEdit ? 'Update Employee Record' : 'Register New Employee'}">Employee Form</span>
+                            </h2>
+                            <p class="card-subtitle">
+                                <span th:if="${isEdit}" th:text="'Editing employee ID #' + ${employeeId}">Editing record</span>
+                                <span th:unless="${isEdit}">Fill in the employee's details below to onboard them into the directory.</span>
+                            </p>
+                        </div>
+                        <a th:href="@{/employees}" class="btn btn-secondary btn-sm">&larr; Back to Directory</a>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Employee Form -->
+                        <form th:action="${isEdit ? '/employees/update/' + employeeId : '/employees'}" 
+                              th:object="${employee}" 
+                              method="post" 
+                              novalidate>
+
+                            <!-- Hidden ID field for edit -->
+                            <input type="hidden" th:field="*{id}" th:if="${isEdit}">
+
+                            <div class="form-grid">
+                                <!-- First Name -->
+                                <div class="form-group">
+                                    <label class="form-label" for="firstName">
+                                        First Name <span class="required">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           id="firstName" 
+                                           th:field="*{firstName}" 
+                                           class="form-control" 
+                                           th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid' : ''"
+                                           placeholder="e.g. Sarah">
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                                        First name is required
+                                    </div>
+                                </div>
+
+                                <!-- Last Name -->
+                                <div class="form-group">
+                                    <label class="form-label" for="lastName">
+                                        Last Name <span class="required">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           id="lastName" 
+                                           th:field="*{lastName}" 
+                                           class="form-control" 
+                                           th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : ''"
+                                           placeholder="e.g. Jenkins">
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                                        Last name is required
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label class="form-label" for="email">
+                                        Corporate Email <span class="required">*</span>
+                                    </label>
+                                    <input type="email" 
+                                           id="email" 
+                                           th:field="*{email}" 
+                                           class="form-control" 
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                           placeholder="sarah.jenkins@techcorp.io">
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                        Valid email is required
+                                    </div>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">
+                                        Phone Number <span class="required">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           id="phone" 
+                                           th:field="*{phone}" 
+                                           class="form-control" 
+                                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid' : ''"
+                                           placeholder="+1 (555) 234-5678">
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
+                                        Valid phone number is required
+                                    </div>
+                                </div>
+
+                                <!-- Department -->
+                                <div class="form-group">
+                                    <label class="form-label" for="department">
+                                        Department <span class="required">*</span>
+                                    </label>
+                                    <select id="department" 
+                                            th:field="*{department}" 
+                                            class="form-control"
+                                            th:classappend="${#fields.hasErrors('department')} ? 'is-invalid' : ''">
+                                        <option value="">-- Select Department --</option>
+                                        <option th:each="dept : ${departments}" 
+                                                th:value="${dept}" 
+                                                th:text="${dept}">
+                                            Department
+                                        </option>
+                                    </select>
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">
+                                        Please select a department
+                                    </div>
+                                </div>
+
+                                <!-- Job Title -->
+                                <div class="form-group">
+                                    <label class="form-label" for="jobTitle">
+                                        Job Title <span class="required">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           id="jobTitle" 
+                                           th:field="*{jobTitle}" 
+                                           class="form-control" 
+                                           th:classappend="${#fields.hasErrors('jobTitle')} ? 'is-invalid' : ''"
+                                           placeholder="e.g. Senior Software Engineer">
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">
+                                        Job title is required
+                                    </div>
+                                </div>
+
+                                <!-- Salary -->
+                                <div class="form-group">
+                                    <label class="form-label" for="salary">
+                                        Annual Salary ($ USD) <span class="required">*</span>
+                                    </label>
+                                    <input type="number" 
+                                           step="0.01" 
+                                           id="salary" 
+                                           th:field="*{salary}" 
+                                           class="form-control" 
+                                           th:classappend="${#fields.hasErrors('salary')} ? 'is-invalid' : ''"
+                                           placeholder="95000.00">
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">
+                                        Valid positive salary is required
+                                    </div>
+                                </div>
+
+                                <!-- Joining Date -->
+                                <div class="form-group">
+                                    <label class="form-label" for="joiningDate">
+                                        Joining Date <span class="required">*</span>
+                                    </label>
+                                    <input type="date" 
+                                           id="joiningDate" 
+                                           th:field="*{joiningDate}" 
+                                           class="form-control" 
+                                           th:classappend="${#fields.hasErrors('joiningDate')} ? 'is-invalid' : ''">
+                                    <div class="error-feedback" th:if="${#fields.hasErrors('joiningDate')}" th:errors="*{joiningDate}">
+                                        Joining date is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="form-actions">
+                                <a th:href="@{/employees}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary" th:text="${isEdit ? '💾 Save Changes' : '➕ Create Employee'}">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

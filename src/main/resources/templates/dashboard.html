@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ApexEMS Enterprise</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <th:block th:replace="~{fragments/header :: header('Executive Command Center')}"></th:block>
+
+            <!-- Page Content -->
+            <main class="content-area">
+                <!-- Flash Notification for Success -->
+                <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                    <div class="alert-content">
+                        <span>✨</span>
+                        <span th:text="${successMessage}">Operation successful!</span>
+                    </div>
+                    <button class="alert-close" aria-label="Close alert">&times;</button>
+                </div>
+
+                <!-- 1. Primary KPI Metric Cards -->
+                <div class="stats-grid">
+                    <!-- Total Employees Card -->
+                    <div class="stat-card" style="--accent-gradient: var(--grad-primary); --icon-bg: var(--grad-primary); --glow-color: rgba(99, 102, 241, 0.35);">
+                        <div class="stat-header">
+                            <span class="stat-title">Total Workforce</span>
+                            <div class="stat-icon">👥</div>
+                        </div>
+                        <div class="stat-value" th:text="${stats.totalEmployees}">0</div>
+                        <div class="stat-footer">
+                            <span class="stat-pill success">Active</span>
+                            <span>Across all functional units</span>
+                        </div>
+                    </div>
+
+                    <!-- Departments Card -->
+                    <div class="stat-card" style="--accent-gradient: var(--grad-secondary); --icon-bg: var(--grad-secondary); --glow-color: rgba(6, 182, 212, 0.35);">
+                        <div class="stat-header">
+                            <span class="stat-title">Business Units</span>
+                            <div class="stat-icon">🏢</div>
+                        </div>
+                        <div class="stat-value" th:text="${stats.totalDepartments}">0</div>
+                        <div class="stat-footer">
+                            <span class="stat-pill info">Enterprise</span>
+                            <span>Organized operational divisions</span>
+                        </div>
+                    </div>
+
+                    <!-- Average Salary Card -->
+                    <div class="stat-card" style="--accent-gradient: var(--grad-success); --icon-bg: var(--grad-success); --glow-color: rgba(16, 185, 129, 0.35);">
+                        <div class="stat-header">
+                            <span class="stat-title">Average Compensation</span>
+                            <div class="stat-icon">💵</div>
+                        </div>
+                        <div class="stat-value" th:text="'$' + ${#numbers.formatDecimal(stats.averageSalary, 1, 'COMMA', 2, 'POINT')}">$0.00</div>
+                        <div class="stat-footer">
+                            <span class="stat-pill success">Annual</span>
+                            <span>Market-competitive benchmark</span>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Payroll Card -->
+                    <div class="stat-card" style="--accent-gradient: var(--grad-purple); --icon-bg: var(--grad-purple); --glow-color: rgba(139, 92, 246, 0.35);">
+                        <div class="stat-header">
+                            <span class="stat-title">Monthly Payroll Run</span>
+                            <div class="stat-icon">💼</div>
+                        </div>
+                        <div class="stat-value" th:text="'$' + ${#numbers.formatDecimal(stats.monthlyPayroll, 1, 'COMMA', 2, 'POINT')}">$0.00</div>
+                        <div class="stat-footer">
+                            <span class="stat-pill purple">Budget</span>
+                            <span th:text="'Annual: $' + ${#numbers.formatDecimal(stats.totalPayroll, 1, 'COMMA', 2, 'POINT')}">Annual: $0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Compensation Analytics Sub-Bar -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: var(--bg-surface); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Highest Salary</div>
+                            <div style="font-size: 1.25rem; font-weight: 800; color: #059669;" th:text="'$' + ${#numbers.formatDecimal(stats.highestSalary, 1, 'COMMA', 2, 'POINT')}">$0.00</div>
+                        </div>
+                        <span style="font-size: 1.5rem;">💎</span>
+                    </div>
+
+                    <div style="background: var(--bg-surface); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Starting Floor</div>
+                            <div style="font-size: 1.25rem; font-weight: 800; color: #2563eb;" th:text="'$' + ${#numbers.formatDecimal(stats.lowestSalary, 1, 'COMMA', 2, 'POINT')}">$0.00</div>
+                        </div>
+                        <span style="font-size: 1.5rem;">🌱</span>
+                    </div>
+
+                    <div style="background: var(--bg-surface); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Annual Investment</div>
+                            <div style="font-size: 1.25rem; font-weight: 800; color: #7c3aed;" th:text="'$' + ${#numbers.formatDecimal(stats.totalPayroll, 1, 'COMMA', 2, 'POINT')}">$0.00</div>
+                        </div>
+                        <span style="font-size: 1.5rem;">📊</span>
+                    </div>
+                </div>
+
+                <!-- 3. Department Analytics Section with Colorful Progress Bars -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title"><span>🏢</span> Workforce Distribution by Department</h2>
+                            <p class="card-subtitle">Real-time organizational breakdown with headcount allocation</p>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <a th:href="@{/employees/export}" class="btn btn-secondary btn-sm" title="Download CSV report">📥 Export CSV</a>
+                            <a th:href="@{/employees}" class="btn btn-secondary btn-sm">Filter Directory &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="dept-analytics-grid">
+                            <div th:each="entry : ${stats.departmentEmployeeCounts}" class="dept-analytics-card">
+                                <div class="dept-card-top">
+                                    <span class="dept-card-name">
+                                        <span th:if="${entry.key == 'Engineering'}">💻</span>
+                                        <span th:if="${entry.key == 'Product Management'}">🎯</span>
+                                        <span th:if="${entry.key == 'Human Resources'}">🤝</span>
+                                        <span th:if="${entry.key == 'Finance'}">📈</span>
+                                        <span th:if="${entry.key == 'Marketing'}">🚀</span>
+                                        <span th:if="${entry.key == 'Sales'}">💼</span>
+                                        <span th:if="${entry.key == 'Design'}">🎨</span>
+                                        <span th:if="${entry.key == 'Customer Support'}">🎧</span>
+                                        <span th:text="${entry.key}">Department</span>
+                                    </span>
+                                    <span class="dept-card-count badge"
+                                          th:classappend="${entry.key == 'Engineering'} ? 'badge-engineering' : (${entry.key == 'Product Management'} ? 'badge-product' : (${entry.key == 'Design'} ? 'badge-design' : (${entry.key == 'Human Resources'} ? 'badge-hr' : (${entry.key == 'Finance'} ? 'badge-finance' : (${entry.key == 'Sales'} ? 'badge-sales' : 'badge-default')))))"
+                                          th:text="${entry.value} + ' staff'">0 staff</span>
+                                </div>
+                                <div class="dept-progress-wrap">
+                                    <div class="dept-progress-fill"
+                                         th:style="'width: ' + ${stats.departmentPercentages[entry.key]} + '%; background: ' + (${entry.key == 'Engineering'} ? '#4f46e5' : (${entry.key == 'Product Management'} ? '#db2777' : (${entry.key == 'Finance'} ? '#059669' : (${entry.key == 'Human Resources'} ? '#d97706' : (${entry.key == 'Sales'} ? '#0284c7' : '#8b5cf6'))))) + ';'">
+                                    </div>
+                                </div>
+                                <div class="dept-card-bottom">
+                                    <span>Share of workforce</span>
+                                    <span th:text="${stats.departmentPercentages[entry.key]} + '%'">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Recently Added Employees Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title"><span>✨</span> Recently Onboarded Employees</h2>
+                            <p class="card-subtitle">Latest active hires added to the company roster</p>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <a th:href="@{/employees/new}" class="btn btn-primary btn-sm">➕ Add New Hire</a>
+                            <a th:href="@{/employees}" class="btn btn-secondary btn-sm">View All &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Employee</th>
+                                    <th>Department</th>
+                                    <th>Job Title</th>
+                                    <th>Salary</th>
+                                    <th>Joined On</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="emp : ${stats.recentEmployees}">
+                                    <td>
+                                        <span class="user-id-badge" th:text="'#' + ${emp.id}">#1</span>
+                                    </td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="user-avatar" 
+                                                 th:text="${#strings.substring(emp.firstName, 0, 1) + #strings.substring(emp.lastName, 0, 1)}">AB</div>
+                                            <div>
+                                                <a th:href="@{/employees/{id}(id=${emp.id})}" class="user-name" th:text="${emp.fullName}">Jane Doe</a>
+                                                <div style="font-size: 0.775rem; color: var(--text-muted);" th:text="${emp.email}">jane@example.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge" 
+                                              th:classappend="${emp.department == 'Engineering'} ? 'badge-engineering' : (${emp.department == 'Product Management'} ? 'badge-product' : (${emp.department == 'Design'} ? 'badge-design' : (${emp.department == 'Human Resources'} ? 'badge-hr' : (${emp.department == 'Finance'} ? 'badge-finance' : (${emp.department == 'Sales'} ? 'badge-sales' : 'badge-default')))))"
+                                              th:text="${emp.department}">Department</span>
+                                    </td>
+                                    <td style="font-weight: 500;" th:text="${emp.jobTitle}">Senior Engineer</td>
+                                    <td style="font-weight: 700; color: #059669;" 
+                                        th:text="'$' + ${#numbers.formatDecimal(emp.salary, 1, 'COMMA', 2, 'POINT')}">$95,000.00</td>
+                                    <td style="color: var(--text-muted); font-size: 0.825rem;" th:text="${emp.joiningDate}">2023-01-15</td>
+                                    <td style="text-align: right;">
+                                        <div class="action-buttons" style="justify-content: flex-end;">
+                                            <a th:href="@{/employees/{id}(id=${emp.id})}" class="btn-action view" title="View Profile">👁️</a>
+                                            <a th:href="@{/employees/edit/{id}(id=${emp.id})}" class="btn-action edit" title="Edit Profile">✏️</a>
+                                            <button type="button" class="btn-action delete btn-delete-trigger" 
+                                                    th:data-id="${emp.id}" 
+                                                    th:data-name="${emp.fullName}" 
+                                                    title="Delete Record">🗑️</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(stats.recentEmployees)}">
+                                    <td colspan="7">
+                                        <div class="empty-state">
+                                            <div class="empty-icon">👥</div>
+                                            <div class="empty-title">No employees in directory</div>
+                                            <div class="empty-desc">Get started by creating your first employee profile.</div>
+                                            <a th:href="@{/employees/new}" class="btn btn-primary btn-sm">➕ Add First Employee</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Reusable Delete Modal -->
+    <th:block th:replace="~{fragments/modal :: deleteModal}"></th:block>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

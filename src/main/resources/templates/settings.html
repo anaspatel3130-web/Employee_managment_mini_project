@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings & Preferences - ApexEMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <th:block th:replace="~{fragments/header :: header('System Settings & Preferences')}"></th:block>
+
+            <!-- Page Content -->
+            <main class="content-area">
+                <!-- 1. Theme & Appearance Customizer -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title"><span>🎨</span> Theme & Visual Appearance</h2>
+                            <p class="card-subtitle">Choose your preferred workspace aesthetic. Preferences are saved automatically.</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                            <!-- Light Modern Theme Card -->
+                            <div class="theme-option-card" id="themeSelectLight" style="border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; cursor: pointer; transition: var(--transition); background: #ffffff;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <div style="font-weight: 800; font-size: 1.1rem; color: #0f172a; display: flex; align-items: center; gap: 0.5rem;">
+                                        <span>☀️</span> Light Modern
+                                    </div>
+                                    <span class="badge" id="badgeActiveLight" style="background: #e2e8f0; color: #475569;">Active</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">
+                                    Clean executive enterprise style with crisp surfaces, slate typography, and subtle indigo accents.
+                                </p>
+                                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #4f46e5;"></div>
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #0ea5e9;"></div>
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #10b981;"></div>
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #f8fafc; border: 1px solid #cbd5e1;"></div>
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" style="width: 100%;" onclick="setAppTheme('light')">Select Light Theme</button>
+                            </div>
+
+                            <!-- Neon Black Cyberpunk Theme Card -->
+                            <div class="theme-option-card" id="themeSelectNeon" style="border: 2px solid #00f0ff; border-radius: var(--radius-lg); padding: 1.5rem; cursor: pointer; transition: var(--transition); background: #0b0f19; box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <div style="font-weight: 800; font-size: 1.1rem; color: #00f0ff; display: flex; align-items: center; gap: 0.5rem; text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);">
+                                        <span>⚡</span> Neon Black (Cyberpunk)
+                                    </div>
+                                    <span class="badge" id="badgeActiveNeon" style="background: rgba(0, 240, 255, 0.2); color: #00f0ff; border: 1px solid #00f0ff;">High Contrast</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.25rem;">
+                                    Ultra-dark pitch-black backdrop with glowing electric cyan, neon magenta, and ambient illumination.
+                                </p>
+                                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #00f0ff; box-shadow: 0 0 8px #00f0ff;"></div>
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #d946ef; box-shadow: 0 0 8px #d946ef;"></div>
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></div>
+                                    <div style="width: 24px; height: 24px; border-radius: 50%; background: #07090e; border: 1px solid #00f0ff;"></div>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-sm" style="width: 100%; background: linear-gradient(135deg, #00f0ff, #7c3aed); border: none;" onclick="setAppTheme('neon-dark')">Activate Neon Black</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. System Diagnostics & Technical Architecture -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title"><span>⚙️</span> Environment & System Information</h2>
+                            <p class="card-subtitle">Runtime specifications and active database configuration.</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+                            <div style="background: var(--bg-surface-alt); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md);">
+                                <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Java Runtime</div>
+                                <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);" th:text="'JDK ' + ${javaVersion}">Java 21</div>
+                            </div>
+
+                            <div style="background: var(--bg-surface-alt); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md);">
+                                <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Framework</div>
+                                <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">Spring Boot 3.3.4</div>
+                            </div>
+
+                            <div style="background: var(--bg-surface-alt); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md);">
+                                <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Database Engine</div>
+                                <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);">H2 (Persistent File)</div>
+                            </div>
+
+                            <div style="background: var(--bg-surface-alt); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md);">
+                                <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Storage Path</div>
+                                <div style="font-size: 0.95rem; font-family: monospace; font-weight: 700; color: var(--primary);">./data/emsdb.mv.db</div>
+                            </div>
+
+                            <div style="background: var(--bg-surface-alt); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md);">
+                                <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Active Records</div>
+                                <div style="font-size: 1.15rem; font-weight: 800; color: #059669;" th:text="${stats.totalEmployees} + ' Employees'">11 Employees</div>
+                            </div>
+
+                            <div style="background: var(--bg-surface-alt); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: var(--radius-md);">
+                                <div style="font-size: 0.725rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Host Platform</div>
+                                <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-main);" th:text="${osName}">Windows</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Quick Administrative Shortcuts -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title"><span>🛠️</span> Administration & Developer Actions</h2>
+                            <p class="card-subtitle">Quick shortcuts for database maintenance and export utilities.</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                            <a th:href="@{/h2-console}" target="_blank" class="btn btn-secondary">
+                                <span>🗄️</span> Launch H2 SQL Studio
+                            </a>
+                            <a th:href="@{/employees/export}" class="btn btn-secondary">
+                                <span>📥</span> Download Full Dataset (CSV)
+                            </a>
+                            <a th:href="@{/api/v1/employees}" target="_blank" class="btn btn-secondary">
+                                <span>⚡</span> Inspect REST API (JSON)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

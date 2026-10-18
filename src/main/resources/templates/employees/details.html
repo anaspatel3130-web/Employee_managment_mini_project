@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${employee.fullName} + ' - Employee Profile'">Employee Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <th:block th:replace="~{fragments/header :: header('Employee Profile')}"></th:block>
+
+            <!-- Page Content -->
+            <main class="content-area">
+                <div class="card" style="max-width: 900px; margin: 0 auto;">
+                    <!-- Profile Banner Header -->
+                    <div class="profile-banner">
+                        <div class="profile-main">
+                            <div class="profile-avatar-lg" 
+                                 th:text="${#strings.substring(employee.firstName, 0, 1) + #strings.substring(employee.lastName, 0, 1)}">
+                                JD
+                            </div>
+                            <div>
+                                <h1 class="profile-name" th:text="${employee.fullName}">Jane Doe</h1>
+                                <div class="profile-role" th:text="${employee.jobTitle}">Senior Software Engineer</div>
+                                <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
+                                    <span class="badge" 
+                                          style="background: rgba(255, 255, 255, 0.2); color: #ffffff;"
+                                          th:text="${employee.department}">Department</span>
+                                    <span class="user-id-badge" style="background: rgba(255, 255, 255, 0.15); color: #ffffff;" 
+                                          th:text="'Employee ID: #' + ${employee.id}">#1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div style="display: flex; gap: 0.5rem;">
+                            <a th:href="@{/employees/edit/{id}(id=${employee.id})}" class="btn btn-secondary btn-sm">
+                                ✏️ Edit Profile
+                            </a>
+                            <button type="button" 
+                                    class="btn btn-danger btn-sm btn-delete-trigger" 
+                                    th:data-id="${employee.id}" 
+                                    th:data-name="${employee.fullName}">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Details Grid -->
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">First Name</span>
+                            <span class="detail-value" th:text="${employee.firstName}">Jane</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Last Name</span>
+                            <span class="detail-value" th:text="${employee.lastName}">Doe</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Corporate Email</span>
+                            <span class="detail-value">
+                                <a th:href="'mailto:' + ${employee.email}" th:text="${employee.email}">jane@company.com</a>
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Phone Contact</span>
+                            <span class="detail-value" th:text="${employee.phone}">+1 (555) 000-0000</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Department</span>
+                            <span class="detail-value" th:text="${employee.department}">Engineering</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Job Title</span>
+                            <span class="detail-value" th:text="${employee.jobTitle}">Lead Architect</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Annual Salary</span>
+                            <span class="detail-value" style="color: var(--success-text); font-size: 1.25rem;" 
+                                  th:text="'$' + ${#numbers.formatDecimal(employee.salary, 1, 'COMMA', 2, 'POINT')}">
+                                $120,000.00
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Joining Date</span>
+                            <span class="detail-value" th:text="${employee.joiningDate}">2022-01-15</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Employment Status</span>
+                            <span class="detail-value">
+                                <span class="badge" style="background: #ecfdf5; color: #065f46;">● Active Full-Time</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer Back Button -->
+                    <div style="padding: 1.5rem 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                        <a th:href="@{/employees}" class="btn btn-secondary btn-sm">&larr; Back to Employee Directory</a>
+                        <a th:href="@{/dashboard}" class="btn btn-secondary btn-sm">Go to Dashboard &rarr;</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Reusable Delete Modal Fragment -->
+    <th:block th:replace="~{fragments/modal :: deleteModal}"></th:block>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

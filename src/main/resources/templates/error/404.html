@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Not Found | ApexEMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <th:block th:replace="~{fragments/header :: header('Resource Not Found')}"></th:block>
+
+            <!-- Page Content -->
+            <main class="content-area">
+                <div class="card" style="max-width: 600px; margin: 3rem auto; text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; line-height: 1; margin-bottom: 1rem;">🔍</div>
+                    <h2 class="card-title" style="justify-content: center; font-size: 1.5rem; margin-bottom: 0.5rem;" 
+                        th:text="${errorTitle != null ? errorTitle : 'Page or Employee Not Found'}">
+                        Employee Not Found
+                    </h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;" 
+                       th:text="${errorMessage != null ? errorMessage : 'The requested resource could not be found or may have been deleted.'}">
+                        The employee record you are looking for does not exist or has been removed.
+                    </p>
+                    <div style="display: flex; gap: 0.75rem; justify-content: center;">
+                        <a th:href="@{/employees}" class="btn btn-primary">Back to Directory</a>
+                        <a th:href="@{/dashboard}" class="btn btn-secondary">Go to Dashboard</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
