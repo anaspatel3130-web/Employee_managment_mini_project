@@ -4,42 +4,29 @@
  */
 
 // -----------------------------------------------------------------
-// 0. Theme Switcher System (Light Modern vs. Cyberpunk Neon Black)
+// 0. Theme Switcher System (White / Light Modern vs. Cyberpunk Neon Black)
 // -----------------------------------------------------------------
 function applyTheme(theme) {
-  if (theme === 'neon-dark') {
-    document.documentElement.setAttribute('data-theme', 'neon-dark');
-    localStorage.setItem('apex_theme', 'neon-dark');
-    updateThemeUi('neon-dark');
-  } else {
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('apex_theme', 'light');
-    updateThemeUi('light');
+  const activeTheme = (theme === 'light') ? 'light' : 'neon-dark';
+  document.documentElement.setAttribute('data-theme', activeTheme);
+  try {
+    localStorage.setItem('apex_theme', activeTheme);
+  } catch (e) {
+    // Ignore storage issues if any
   }
+  updateThemeUi(activeTheme);
 }
 
 function updateThemeUi(theme) {
-  const toggleIcon = document.getElementById('themeToggleIcon');
-  const toggleText = document.getElementById('themeToggleText');
+  const btnLight = document.getElementById('btnThemeLight');
+  const btnNeon = document.getElementById('btnThemeNeon');
   const badgeLight = document.getElementById('badgeActiveLight');
   const badgeNeon = document.getElementById('badgeActiveNeon');
 
-  if (theme === 'neon-dark') {
-    if (toggleIcon) toggleIcon.textContent = '☀️';
-    if (toggleText) toggleText.textContent = 'Light Mode';
-    if (badgeLight) {
-      badgeLight.textContent = 'Inactive';
-      badgeLight.style.background = '#e2e8f0';
-      badgeLight.style.color = '#475569';
-    }
-    if (badgeNeon) {
-      badgeNeon.textContent = 'Active';
-      badgeNeon.style.background = 'rgba(0, 240, 255, 0.2)';
-      badgeNeon.style.color = '#00f0ff';
-    }
-  } else {
-    if (toggleIcon) toggleIcon.textContent = '🌙';
-    if (toggleText) toggleText.textContent = 'Neon Dark';
+  if (theme === 'light') {
+    if (btnLight) btnLight.className = 'theme-pill-btn active-light';
+    if (btnNeon) btnNeon.className = 'theme-pill-btn';
+
     if (badgeLight) {
       badgeLight.textContent = 'Active';
       badgeLight.style.background = '#dcfce7';
@@ -50,31 +37,41 @@ function updateThemeUi(theme) {
       badgeNeon.style.background = '#e2e8f0';
       badgeNeon.style.color = '#475569';
     }
+  } else {
+    if (btnNeon) btnNeon.className = 'theme-pill-btn active-neon';
+    if (btnLight) btnLight.className = 'theme-pill-btn';
+
+    if (badgeLight) {
+      badgeLight.textContent = 'Inactive';
+      badgeLight.style.background = '#e2e8f0';
+      badgeLight.style.color = '#475569';
+    }
+    if (badgeNeon) {
+      badgeNeon.textContent = 'Active';
+      badgeNeon.style.background = 'rgba(0, 240, 255, 0.2)';
+      badgeNeon.style.color = '#00f0ff';
+    }
   }
 }
 
-// Global hook for settings page buttons
-window.setAppTheme = function(theme) {
-  applyTheme(theme);
-};
+// Global hooks for onclick handlers across templates
+window.applyTheme = applyTheme;
+window.setAppTheme = applyTheme;
 
-// Immediate execution to prevent flash of wrong theme
-const savedTheme = localStorage.getItem('apex_theme') || 'light';
-applyTheme(savedTheme);
+// Immediate theme execution on script load to prevent flash of wrong theme
+const initialTheme = (function() {
+  try {
+    return localStorage.getItem('apex_theme') || 'neon-dark';
+  } catch (e) {
+    return 'neon-dark';
+  }
+})();
+document.documentElement.setAttribute('data-theme', initialTheme);
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Update UI on load
-  updateThemeUi(savedTheme);
-
-  // Header quick toggle button
-  const headerThemeToggle = document.getElementById('headerThemeToggle');
-  if (headerThemeToggle) {
-    headerThemeToggle.addEventListener('click', () => {
-      const current = localStorage.getItem('apex_theme') === 'neon-dark' ? 'light' : 'neon-dark';
-      applyTheme(current);
-    });
-  }
+  // Synchronize UI buttons on DOM ready
+  updateThemeUi(initialTheme);
 
   // -----------------------------------------------------------------
   // 1. Delete Confirmation Modal Handler

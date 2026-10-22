@@ -29,10 +29,10 @@
                     <div class="card-body">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
                             <!-- Light Modern Theme Card -->
-                            <div class="theme-option-card" id="themeSelectLight" style="border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; cursor: pointer; transition: var(--transition); background: #ffffff;">
+                            <div class="theme-option-card" id="themeSelectLight" onclick="applyTheme('light')" style="border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; cursor: pointer; transition: var(--transition); background: #ffffff;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                     <div style="font-weight: 800; font-size: 1.1rem; color: #0f172a; display: flex; align-items: center; gap: 0.5rem;">
-                                        <span>☀️</span> Light Modern
+                                        <span>☀️</span> White (Light Modern)
                                     </div>
                                     <span class="badge" id="badgeActiveLight" style="background: #e2e8f0; color: #475569;">Active</span>
                                 </div>
@@ -45,11 +45,11 @@
                                     <div style="width: 24px; height: 24px; border-radius: 50%; background: #10b981;"></div>
                                     <div style="width: 24px; height: 24px; border-radius: 50%; background: #f8fafc; border: 1px solid #cbd5e1;"></div>
                                 </div>
-                                <button type="button" class="btn btn-secondary btn-sm" style="width: 100%;" onclick="setAppTheme('light')">Select Light Theme</button>
+                                <button type="button" class="btn btn-secondary btn-sm" style="width: 100%;" onclick="applyTheme('light')">Select White Theme</button>
                             </div>
 
                             <!-- Neon Black Cyberpunk Theme Card -->
-                            <div class="theme-option-card" id="themeSelectNeon" style="border: 2px solid #00f0ff; border-radius: var(--radius-lg); padding: 1.5rem; cursor: pointer; transition: var(--transition); background: #0b0f19; box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
+                            <div class="theme-option-card" id="themeSelectNeon" onclick="applyTheme('neon-dark')" style="border: 2px solid #00f0ff; border-radius: var(--radius-lg); padding: 1.5rem; cursor: pointer; transition: var(--transition); background: #0b0f19; box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                     <div style="font-weight: 800; font-size: 1.1rem; color: #00f0ff; display: flex; align-items: center; gap: 0.5rem; text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);">
                                         <span>⚡</span> Neon Black (Cyberpunk)
@@ -65,7 +65,7 @@
                                     <div style="width: 24px; height: 24px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></div>
                                     <div style="width: 24px; height: 24px; border-radius: 50%; background: #07090e; border: 1px solid #00f0ff;"></div>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-sm" style="width: 100%; background: linear-gradient(135deg, #00f0ff, #7c3aed); border: none;" onclick="setAppTheme('neon-dark')">Activate Neon Black</button>
+                                <button type="button" class="btn btn-primary btn-sm" style="width: 100%; background: linear-gradient(135deg, #00f0ff, #7c3aed); border: none;" onclick="applyTheme('neon-dark')">Activate Neon Black</button>
                             </div>
                         </div>
                     </div>

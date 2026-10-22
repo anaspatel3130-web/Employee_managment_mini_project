@@ -11,11 +11,15 @@
         </div>
 
         <div class="header-right">
-            <!-- Theme Toggle Button -->
-            <button type="button" class="btn btn-secondary btn-sm" id="headerThemeToggle" title="Toggle Light / Neon Black Theme" style="display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600;">
-                <span id="themeToggleIcon">🌙</span>
-                <span id="themeToggleText">Neon Dark</span>
-            </button>
+            <!-- Dual Theme Selector (Simultaneous White & Neon Options) -->
+            <div class="theme-toggle-group" role="group" aria-label="Theme selector">
+                <button type="button" id="btnThemeLight" class="theme-pill-btn" onclick="applyTheme('light')" title="Switch to Clean White Theme">
+                    <span>☀️</span> White
+                </button>
+                <button type="button" id="btnThemeNeon" class="theme-pill-btn" onclick="applyTheme('neon-dark')" title="Switch to Cyberpunk Neon Theme">
+                    <span>⚡</span> Neon
+                </button>
+            </div>
 
             <!-- Dynamic Live Clock -->
             <div class="live-clock" id="liveClock">

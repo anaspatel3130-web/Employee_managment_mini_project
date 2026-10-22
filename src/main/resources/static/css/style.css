@@ -87,7 +87,7 @@
   --bg-page: #f8fafc;
   --bg-surface: #ffffff;
   --bg-surface-alt: #f1f5f9;
-  --bg-sidebar: #0b1120;
+  --bg-sidebar: #0f172a;
   --sidebar-hover: rgba(255, 255, 255, 0.08);
   --sidebar-active: #4f46e5;
 
@@ -99,23 +99,156 @@
   --primary: #4f46e5;
   --primary-hover: #4338ca;
   --primary-light: #eef2ff;
-  --primary-glow: rgba(79, 70, 229, 0.25);
+  --primary-glow: rgba(79, 70, 229, 0.2);
 
-  --success-text: #065f46;
-  --warning-text: #92400e;
-  --danger-text: #991b1b;
+  --secondary: #0284c7;
+  --secondary-light: #f0f9ff;
+
+  --success: #10b981;
+  --success-light: #ecfdf5;
+  --success-text: #047857;
+
+  --warning: #f59e0b;
+  --warning-light: #fffbeb;
+  --warning-text: #b45309;
+
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-light: #fef2f2;
+  --danger-text: #b91c1c;
 
   --border: #e2e8f0;
-  --border-focus: #818cf8;
+  --border-focus: #4f46e5;
 
   --grad-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --grad-secondary: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
   --grad-sidebar: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
-  --grad-dark-card: linear-gradient(145deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+  --grad-dark-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-  --shadow-glow: 0 10px 25px -5px rgba(79, 70, 229, 0.3);
+  --shadow-glow: none;
+
+  --neon-cyan: #4f46e5;
+  --neon-cyan-glow: none;
+  --neon-magenta: #db2777;
+  --neon-magenta-glow: none;
+  --neon-purple: #7c3aed;
+  --neon-purple-glow: none;
+  --neon-green: #10b981;
+  --neon-green-glow: none;
+  --neon-amber: #f59e0b;
+  --neon-amber-glow: none;
+}
+
+/* Dual Theme Toggle Pill */
+.theme-toggle-group {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 3px;
+}
+
+.theme-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.775rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-pill-btn:hover {
+  color: var(--text-main);
+}
+
+.theme-pill-btn.active-light {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5e1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.theme-pill-btn.active-neon {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(112, 0, 255, 0.3));
+  color: #00f0ff;
+  border-color: #00f0ff;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
+
+[data-theme="light"] .theme-pill-btn.active-light {
+  background: #ffffff;
+  color: #4f46e5;
+  border-color: #c7d2fe;
+  box-shadow: 0 1px 4px rgba(79, 70, 229, 0.15);
+}
+
+[data-theme="light"] .theme-pill-btn.active-neon {
+  background: #0f172a;
+  color: #00f0ff;
+  border-color: #00f0ff;
+}
+
+/* Light Theme Component Specifics */
+[data-theme="light"] .data-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+[data-theme="light"] .card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .stat-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .stat-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .btn-secondary {
+  background-color: #ffffff;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-color: #94a3b8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .modal-content {
+  background-color: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .form-control,
+[data-theme="light"] .search-input,
+[data-theme="light"] .filter-select {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme="light"] .form-control:focus,
+[data-theme="light"] .search-input:focus,
+[data-theme="light"] .filter-select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
 /* Reset */
